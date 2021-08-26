@@ -1,3 +1,6 @@
+#without extension
+!*.*
+
 # Prerequisites
 *.d
 
