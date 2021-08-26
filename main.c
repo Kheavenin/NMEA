@@ -131,7 +131,7 @@ int main()
 
     openFile(psReadBuffer, InputFileName);
     size_t k = 0;
-    while (k < 10)
+    while (k < 100)
     {
         getLine(psReadBuffer);
         putLine(psReadBuffer);
