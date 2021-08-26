@@ -99,8 +99,6 @@ char *findSperator(char *str, char sep);
 void UTCtoString(char *s, double d);
 // end of .h
 
-
-
 NMEA_Read_Struct_t sReadBuffer;
 NMEA_Read_Struct_t *psReadBuffer = &sReadBuffer;
 NMEA_0183_Struct_t sNMEA;
@@ -120,8 +118,6 @@ static const char *const tNMEA_Preamble[PREAMBLE_TABLE_SIZE] = {
     [HDT] = "$GPHDT",
     [RMC] = "$GPRMC",
     [VTG] = "$GPVTG"};
-
-
 
 //** MAINA */
 int main()
@@ -186,7 +182,6 @@ void getLine(NMEA_Read_Struct_t *psNMEA_ReadStruct)
     if ((psNMEA_ReadStruct != NULL) && (psNMEA_ReadStruct->pReadFile != NULL))
     {
         fgets(psNMEA_ReadStruct->ptReadBuffer, READ_BUFFER_SIZE, psNMEA_ReadStruct->pReadFile);
-        //    fscanf(psNMEA_ReadStruct->pReadFile, "%[^\n]", psNMEA_ReadStruct->ptReadBuffer);
         psNMEA_ReadStruct->uReadSize = strlen(psNMEA_ReadStruct->ptReadBuffer);
     }
 }
@@ -213,9 +208,7 @@ void clearBuffer(NMEA_Read_Struct_t *psNMEA_ReadStruct)
     }
 }
 
-
 //.c
-
 static void *InitBufferMsgNMEA(NMEA_0183_Struct_t *psNMEA_0183_struct, size_t bufferSize)
 {
     if ((psNMEA_0183_struct != NULL) && (bufferSize > 0) && (bufferSize <= NMEA_MAX_SIZE))
@@ -509,11 +502,11 @@ void UTCtoString(char *s, double d)
         memset((void *)t, 0, sizeof(t));
         uint32_t integral = (uint32_t)d;
         double fraction = d - integral;
-        uint16_t hours = (uint16_t)(integral / 10000);
-        uint16_t minutes = (uint16_t)(integral / 100) - (hours * 100);
-        uint16_t seconds = integral - (hours * 10000) - (minutes * 100);
-        uint16_t useconds = (uint16_t)(fraction * 1000);
-        snprintf(t, 16, "%02d:%02d:%02d.%03d", hours, minutes, seconds, useconds);
+        uint8_t hours = (uint16_t)(integral / 10000);
+        uint8_t minutes = (uint16_t)(integral / 100) - (hours * 100);
+        uint8_t seconds = integral - (hours * 10000) - (minutes * 100);
+        uint8_t useconds = (uint16_t)(fraction * 1000);
+        snprintf(t, 16, "%02hu:%02hu:%02hu.%03hu", hours, minutes, seconds, useconds);
         strncpy(s, t, 16);
     }
 }
